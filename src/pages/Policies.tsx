@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useFeatureFlag } from '../config/features';
-import { PolicyModal } from '../components/PolicyModal';
+// import { PolicyModal } from '../components/PolicyModal';
 import type { RefundPolicy, DepositPolicy, PaymentTerms, RefundRequest } from '../types/policies';
 import { 
   Shield, 
@@ -488,14 +488,14 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
       </div>
 
       {/* Policy Modal */}
-      <PolicyModal
+      {/* <PolicyModal
         isOpen={policyModal.isOpen}
         onClose={() => setPolicyModal({ isOpen: false, mode: 'create', type: 'refund' })}
         onSave={handleSave}
         policy={policyModal.policy}
         mode={policyModal.mode}
         type={policyModal.type}
-      />
+      /> */}
     </div>
   );
 };

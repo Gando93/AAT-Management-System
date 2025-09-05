@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useFeatureFlag } from '../config/features';
-import { CommunicationModal } from '../components/CommunicationModal';
+// import { CommunicationModal } from '../components/CommunicationModal';
 import type { EmailTemplate, SMSMessage, CommunicationLog, NotificationRule, MarketingCampaign } from '../types/communications';
 import { 
   Mail, 
@@ -532,14 +532,14 @@ export const CommunicationsPage: React.FC<CommunicationsPageProps> = ({
       </div>
 
       {/* Communication Modal */}
-      <CommunicationModal
+      {/* <CommunicationModal
         isOpen={communicationModal.isOpen}
         onClose={() => setCommunicationModal({ isOpen: false, mode: 'create', type: 'email_template' })}
         onSave={handleSave}
         item={communicationModal.item}
         mode={communicationModal.mode}
         type={communicationModal.type}
-      />
+      /> */}
     </div>
   );
 };
