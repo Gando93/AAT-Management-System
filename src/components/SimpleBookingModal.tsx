@@ -194,9 +194,16 @@ export const SimpleBookingModal = ({
         }
       }
 
+      // Get selected add-ons
+      const selectedAddons = addons.filter(addon => addon.selected).map(addon => ({
+        name: addon.name,
+        price: addon.type === 'per_booking' ? addon.price : addon.price * (formData.adults + formData.children)
+      }));
+
       const booking: Omit<Booking, 'id'> = {
         tourName: tour.name,
         tourDate: formData.tourDate,
+        departureTime: formData.departureTime,
         customerId: customerId || '',
         customerName: formData.customerName,
         totalAmount: priceBreakdown?.total || 0,
@@ -205,6 +212,8 @@ export const SimpleBookingModal = ({
         participants: formData.adults,
         notes: formData.specialRequests,
         vehicleId: formData.assignedVehicle,
+        guideId: formData.assignedGuide,
+        addOns: selectedAddons,
         bookingDate: new Date().toISOString(),
         tourId: formData.tourId,
         paymentStatus: 'pending',

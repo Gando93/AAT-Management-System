@@ -221,6 +221,54 @@ export const initializeData = () => {
       lastLogin: new Date().toISOString(),
       createdAt: new Date().toISOString(),
       needsPasswordSetup: true
+    },
+    {
+      id: '3',
+      name: 'Aisha Ceesay',
+      email: 'aisha.guide@aat.com',
+      role: 'Guide',
+      status: 'active',
+      permissions: [
+        'bookings.read',
+        'tours.read',
+        'customers.read',
+        'vehicles.read'
+      ],
+      lastLogin: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      needsPasswordSetup: false
+    },
+    {
+      id: '4',
+      name: 'Modou Njie',
+      email: 'modou.guide@aat.com',
+      role: 'Guide',
+      status: 'active',
+      permissions: [
+        'bookings.read',
+        'tours.read',
+        'customers.read',
+        'vehicles.read'
+      ],
+      lastLogin: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      needsPasswordSetup: false
+    },
+    {
+      id: '5',
+      name: 'Fatou Jallow',
+      email: 'fatou.guide@aat.com',
+      role: 'Guide',
+      status: 'active',
+      permissions: [
+        'bookings.read',
+        'tours.read',
+        'customers.read',
+        'vehicles.read'
+      ],
+      lastLogin: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      needsPasswordSetup: false
     }
   ];
 

@@ -19,6 +19,7 @@ export interface Booking {
   tourName: string;
   bookingDate: string;
   tourDate: string;
+  departureTime?: string;
   totalAmount: number;
   status: 'confirmed' | 'pending' | 'cancelled' | 'paid';
   guests: number;
@@ -26,6 +27,11 @@ export interface Booking {
   customerId?: string;
   tourId?: string;
   vehicleId?: string;
+  guideId?: string;
+  addOns?: Array<{
+    name: string;
+    price: number;
+  }>;
   notes?: string;
   paymentMethod?: string;
   paymentStatus?: 'pending' | 'paid' | 'refunded';
