@@ -93,7 +93,7 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
     }
   };
 
-  const handleSave = (policyData: any) => {
+  const handleSave = (_policyData: any) => {
     if (policyModal.type === 'refund') {
       if (policyModal.mode === 'create') {
         onSaveRefundPolicy(policyData);

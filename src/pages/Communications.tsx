@@ -100,7 +100,7 @@ export const CommunicationsPage: React.FC<CommunicationsPageProps> = ({
     }
   };
 
-  const handleSave = (itemData: any) => {
+  const handleSave = (_itemData: any) => {
     if (communicationModal.type === 'email_template') {
       if (communicationModal.mode === 'create') {
         onSaveEmailTemplate(itemData);
