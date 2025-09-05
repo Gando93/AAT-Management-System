@@ -5,8 +5,30 @@ interface Guide {
   id: string;
   name: string;
   email: string;
-  phone?: string;
-  specialties?: string[];
+  phone: string;
+  languages: string[];
+  skills: string[];
+  certifications: Array<{
+    id: string;
+    name: string;
+    issuingBody: string;
+    issueDate: string;
+    expiryDate: string;
+    status: 'valid' | 'expired' | 'expiring-soon';
+  }>;
+  maxDailyHours: number;
+  status: 'active' | 'inactive' | 'on-leave';
+  emergencyContact: {
+    name: string;
+    phone: string;
+    relationship: string;
+  };
+  address: string;
+  dateOfBirth: string;
+  hireDate: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface GuideModalProps {
@@ -28,7 +50,15 @@ export const GuideModal: React.FC<GuideModalProps> = ({
     name: guide?.name || '',
     email: guide?.email || '',
     phone: guide?.phone || '',
-    specialties: guide?.specialties || []
+    languages: guide?.languages || [],
+    skills: guide?.skills || [],
+    maxDailyHours: guide?.maxDailyHours || 8,
+    status: guide?.status || 'active',
+    emergencyContact: guide?.emergencyContact || { name: '', phone: '', relationship: '' },
+    address: guide?.address || '',
+    dateOfBirth: guide?.dateOfBirth || '',
+    hireDate: guide?.hireDate || '',
+    notes: guide?.notes || ''
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -38,15 +68,31 @@ export const GuideModal: React.FC<GuideModalProps> = ({
       setFormData({
         name: guide.name,
         email: guide.email,
-        phone: guide.phone || '',
-        specialties: guide.specialties || []
+        phone: guide.phone,
+        languages: guide.languages,
+        skills: guide.skills,
+        maxDailyHours: guide.maxDailyHours,
+        status: guide.status,
+        emergencyContact: guide.emergencyContact,
+        address: guide.address,
+        dateOfBirth: guide.dateOfBirth,
+        hireDate: guide.hireDate,
+        notes: guide.notes || ''
       });
     } else {
       setFormData({
         name: '',
         email: '',
         phone: '',
-        specialties: []
+        languages: [],
+        skills: [],
+        maxDailyHours: 8,
+        status: 'active',
+        emergencyContact: { name: '', phone: '', relationship: '' },
+        address: '',
+        dateOfBirth: '',
+        hireDate: '',
+        notes: ''
       });
     }
   }, [guide, mode]);
@@ -71,8 +117,19 @@ export const GuideModal: React.FC<GuideModalProps> = ({
       id: guide?.id || 'guide_' + Date.now(),
       name: formData.name.trim(),
       email: formData.email.trim(),
-      phone: formData.phone.trim() || undefined,
-      specialties: formData.specialties
+      phone: formData.phone.trim(),
+      languages: formData.languages,
+      skills: formData.skills,
+      certifications: [],
+      maxDailyHours: formData.maxDailyHours,
+      status: formData.status,
+      emergencyContact: formData.emergencyContact,
+      address: formData.address.trim(),
+      dateOfBirth: formData.dateOfBirth,
+      hireDate: formData.hireDate,
+      notes: formData.notes.trim() || undefined,
+      createdAt: guide?.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     };
 
     onSave(guideData);
@@ -86,24 +143,45 @@ export const GuideModal: React.FC<GuideModalProps> = ({
     }
   };
 
-  const addSpecialty = () => {
+  const addLanguage = () => {
     setFormData(prev => ({
       ...prev,
-      specialties: [...prev.specialties, '']
+      languages: [...prev.languages, '']
     }));
   };
 
-  const updateSpecialty = (index: number, value: string) => {
+  const updateLanguage = (index: number, value: string) => {
     setFormData(prev => ({
       ...prev,
-      specialties: prev.specialties.map((s, i) => i === index ? value : s)
+      languages: prev.languages.map((l, i) => i === index ? value : l)
     }));
   };
 
-  const removeSpecialty = (index: number) => {
+  const removeLanguage = (index: number) => {
     setFormData(prev => ({
       ...prev,
-      specialties: prev.specialties.filter((_, i) => i !== index)
+      languages: prev.languages.filter((_, i) => i !== index)
+    }));
+  };
+
+  const addSkill = () => {
+    setFormData(prev => ({
+      ...prev,
+      skills: [...prev.skills, '']
+    }));
+  };
+
+  const updateSkill = (index: number, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      skills: prev.skills.map((s, i) => i === index ? value : s)
+    }));
+  };
+
+  const removeSkill = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      skills: prev.skills.filter((_, i) => i !== index)
     }));
   };
 
@@ -161,21 +239,21 @@ export const GuideModal: React.FC<GuideModalProps> = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Specialties
+            Languages
           </label>
           <div className="space-y-2">
-            {formData.specialties.map((specialty, index) => (
+            {formData.languages.map((language, index) => (
               <div key={index} className="flex space-x-2">
                 <input
                   type="text"
-                  value={specialty}
-                  onChange={(e) => updateSpecialty(index, e.target.value)}
+                  value={language}
+                  onChange={(e) => updateLanguage(index, e.target.value)}
                   className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter specialty"
+                  placeholder="Enter language"
                 />
                 <button
                   type="button"
-                  onClick={() => removeSpecialty(index)}
+                  onClick={() => removeLanguage(index)}
                   className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-md"
                 >
                   Remove
@@ -184,10 +262,43 @@ export const GuideModal: React.FC<GuideModalProps> = ({
             ))}
             <button
               type="button"
-              onClick={addSpecialty}
+              onClick={addLanguage}
               className="text-blue-600 hover:text-blue-700 text-sm"
             >
-              + Add Specialty
+              + Add Language
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Skills
+          </label>
+          <div className="space-y-2">
+            {formData.skills.map((skill, index) => (
+              <div key={index} className="flex space-x-2">
+                <input
+                  type="text"
+                  value={skill}
+                  onChange={(e) => updateSkill(index, e.target.value)}
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter skill"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeSkill(index)}
+                  className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-md"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addSkill}
+              className="text-blue-600 hover:text-blue-700 text-sm"
+            >
+              + Add Skill
             </button>
           </div>
         </div>

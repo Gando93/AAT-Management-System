@@ -91,7 +91,7 @@ export const UserModal = ({ isOpen, onClose, onSave, user, mode }: UserModalProp
     if (formData.role) {
       setFormData(prev => ({
         ...prev,
-        permissions: ROLE_PERMISSIONS[formData.role] || []
+        permissions: ROLE_PERMISSIONS[formData.role as keyof typeof ROLE_PERMISSIONS] || []
       }));
     }
   }, [formData.role]);
