@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useFeatureFlag } from '../config/features';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { PolicyModal } from '../components/PolicyModal';
 import type { RefundPolicy, DepositPolicy, PaymentTerms, RefundRequest } from '../types/policies';
 import { 
@@ -93,6 +94,7 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSave = (policyData: any) => {
     if (policyModal.type === 'refund') {
       if (policyModal.mode === 'create') {
@@ -488,14 +490,14 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
       </div>
 
       {/* Policy Modal */}
-      {/* <PolicyModal
+      <PolicyModal
         isOpen={policyModal.isOpen}
         onClose={() => setPolicyModal({ isOpen: false, mode: 'create', type: 'refund' })}
         onSave={handleSave}
         policy={policyModal.policy}
         mode={policyModal.mode}
         type={policyModal.type}
-      /> */}
+      />
     </div>
   );
 };

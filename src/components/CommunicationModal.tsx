@@ -146,14 +146,14 @@ export const CommunicationModal: React.FC<CommunicationModalProps> = ({
   };
 
   const handleInputChange = (field: string, value: string | number | boolean) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev: any) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: '' }));
     }
   };
 
   const handleNestedInputChange = (parentField: string, childField: string, value: string | number | boolean) => {
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [parentField]: {
         ...prev[parentField],

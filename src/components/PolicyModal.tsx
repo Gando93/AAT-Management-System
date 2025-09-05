@@ -138,15 +138,15 @@ export const PolicyModal: React.FC<PolicyModalProps> = ({
     onSave(typedData);
   };
 
-  const handleInputChange = (field: string, value: string | number | boolean) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const handleInputChange = (field: string, value: string | number | boolean | string[]) => {
+    setFormData((prev: any) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: '' }));
     }
   };
 
   const handleNestedInputChange = (parentField: string, childField: string, value: string | number | boolean) => {
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [parentField]: {
         ...prev[parentField],

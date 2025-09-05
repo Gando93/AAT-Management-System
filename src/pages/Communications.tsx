@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useFeatureFlag } from '../config/features';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CommunicationModal } from '../components/CommunicationModal';
 import type { EmailTemplate, SMSMessage, CommunicationLog, NotificationRule, MarketingCampaign } from '../types/communications';
 import { 
@@ -100,6 +101,7 @@ export const CommunicationsPage: React.FC<CommunicationsPageProps> = ({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSave = (itemData: any) => {
     if (communicationModal.type === 'email_template') {
       if (communicationModal.mode === 'create') {
@@ -532,14 +534,14 @@ export const CommunicationsPage: React.FC<CommunicationsPageProps> = ({
       </div>
 
       {/* Communication Modal */}
-      {/* <CommunicationModal
+      <CommunicationModal
         isOpen={communicationModal.isOpen}
         onClose={() => setCommunicationModal({ isOpen: false, mode: 'create', type: 'email_template' })}
         onSave={handleSave}
         item={communicationModal.item}
         mode={communicationModal.mode}
         type={communicationModal.type}
-      /> */}
+      />
     </div>
   );
 };
