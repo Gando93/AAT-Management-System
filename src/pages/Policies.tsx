@@ -42,25 +42,25 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
   depositPolicies,
   paymentTerms,
   refundRequests,
-  onSaveRefundPolicy,
-  onUpdateRefundPolicy,
-  onDeleteRefundPolicy,
-  onSaveDepositPolicy,
-  onUpdateDepositPolicy,
-  onDeleteDepositPolicy,
-  onSavePaymentTerms,
-  onUpdatePaymentTerms,
-  onDeletePaymentTerms,
-  onProcessRefundRequest
+  // onSaveRefundPolicy,
+  // onUpdateRefundPolicy,
+  // onDeleteRefundPolicy,
+  // onSaveDepositPolicy,
+  // onUpdateDepositPolicy,
+  // onDeleteDepositPolicy,
+  // onSavePaymentTerms,
+  // onUpdatePaymentTerms,
+  // onDeletePaymentTerms,
+  // onProcessRefundRequest
 }) => {
   const isPoliciesEnabled = useFeatureFlag('FEATURE_POLICIES_DEPOSITS');
   const [activeTab, setActiveTab] = useState<'refunds' | 'deposits' | 'payments' | 'requests'>('refunds');
-  const [policyModal, setPolicyModal] = useState<{ 
-    isOpen: boolean; 
-    mode: 'create' | 'edit'; 
-    type: 'refund' | 'deposit' | 'payment';
-    policy?: RefundPolicy | DepositPolicy | PaymentTerms;
-  }>({ isOpen: false, mode: 'create', type: 'refund' });
+  // const [policyModal, setPolicyModal] = useState<{ 
+  //   isOpen: boolean; 
+  //   mode: 'create' | 'edit'; 
+  //   type: 'refund' | 'deposit' | 'payment';
+  //   policy?: RefundPolicy | DepositPolicy | PaymentTerms;
+  // }>({ isOpen: false, mode: 'create', type: 'refund' });
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
 
