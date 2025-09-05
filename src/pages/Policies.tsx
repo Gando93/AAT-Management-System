@@ -93,7 +93,7 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
     }
   };
 
-  const handleSave = (_policyData: any) => {
+  // const handleSave = (_policyData: any) => {
     if (policyModal.type === 'refund') {
       if (policyModal.mode === 'create') {
         onSaveRefundPolicy(_policyData);
@@ -114,7 +114,7 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
       }
     }
     setPolicyModal({ isOpen: false, mode: 'create', type: 'refund' });
-  };
+  // };
 
   const pendingRequests = refundRequests.filter(req => req.status === 'pending');
   const totalRefundAmount = refundRequests

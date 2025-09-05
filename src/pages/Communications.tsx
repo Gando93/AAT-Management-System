@@ -100,7 +100,7 @@ export const CommunicationsPage: React.FC<CommunicationsPageProps> = ({
     }
   };
 
-  const handleSave = (_itemData: any) => {
+  // const handleSave = (_itemData: any) => {
     if (communicationModal.type === 'email_template') {
       if (communicationModal.mode === 'create') {
         onSaveEmailTemplate(_itemData);
@@ -123,7 +123,7 @@ export const CommunicationsPage: React.FC<CommunicationsPageProps> = ({
       }
     }
     setCommunicationModal({ isOpen: false, mode: 'create', type: 'email_template' });
-  };
+  // };
 
   const totalEmails = communicationLogs.filter(log => log.type === 'email').length;
   const totalSMS = communicationLogs.filter(log => log.type === 'sms').length;
