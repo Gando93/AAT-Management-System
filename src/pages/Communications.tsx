@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useFeatureFlag } from '../config/features';
-// import { CommunicationModal } from '../components/CommunicationModal';
+import { CommunicationModal } from '../components/CommunicationModal';
 import type { EmailTemplate, SMSMessage, CommunicationLog, NotificationRule, MarketingCampaign } from '../types/communications';
 import { 
   Mail, 
@@ -45,26 +45,26 @@ export const CommunicationsPage: React.FC<CommunicationsPageProps> = ({
   communicationLogs,
   notificationRules,
   marketingCampaigns,
-  // onSaveEmailTemplate,
-  // onUpdateEmailTemplate,
-  // onDeleteEmailTemplate,
-  // onSendSMS,
-  // onSaveNotificationRule,
-  // onUpdateNotificationRule,
-  // onDeleteNotificationRule,
-  // onSaveMarketingCampaign,
-  // onUpdateMarketingCampaign,
-  // onDeleteMarketingCampaign,
-  // onSendCampaign
+  onSaveEmailTemplate,
+  onUpdateEmailTemplate,
+  onDeleteEmailTemplate,
+  onSendSMS,
+  onSaveNotificationRule,
+  onUpdateNotificationRule,
+  onDeleteNotificationRule,
+  onSaveMarketingCampaign,
+  onUpdateMarketingCampaign,
+  onDeleteMarketingCampaign,
+  onSendCampaign
 }) => {
   const isCommunicationsEnabled = useFeatureFlag('FEATURE_COMMS');
   const [activeTab, setActiveTab] = useState<'templates' | 'messages' | 'logs' | 'rules' | 'campaigns'>('templates');
-  // const [communicationModal, setCommunicationModal] = useState<{ 
-  //   isOpen: boolean; 
-  //   mode: 'create' | 'edit'; 
-  //   type: 'email_template' | 'sms_message' | 'notification_rule' | 'marketing_campaign';
-  //   item?: EmailTemplate | SMSMessage | NotificationRule | MarketingCampaign;
-  // }>({ isOpen: false, mode: 'create', type: 'email_template' });
+  const [communicationModal, setCommunicationModal] = useState<{ 
+    isOpen: boolean; 
+    mode: 'create' | 'edit'; 
+    type: 'email_template' | 'sms_message' | 'notification_rule' | 'marketing_campaign';
+    item?: EmailTemplate | SMSMessage | NotificationRule | MarketingCampaign;
+  }>({ isOpen: false, mode: 'create', type: 'email_template' });
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
 
@@ -100,30 +100,30 @@ export const CommunicationsPage: React.FC<CommunicationsPageProps> = ({
     }
   };
 
-  // const handleSave = (_itemData: any) => {
-  //   if (communicationModal.type === 'email_template') {
-  //     if (communicationModal.mode === 'create') {
-  //       onSaveEmailTemplate(_itemData);
-  //     } else {
-  //       onUpdateEmailTemplate(_itemData);
-  //     }
-  //   } else if (communicationModal.type === 'sms_message') {
-  //     onSendSMS(_itemData);
-  //   } else if (communicationModal.type === 'notification_rule') {
-  //     if (communicationModal.mode === 'create') {
-  //       onSaveNotificationRule(_itemData);
-  //     } else {
-  //       onUpdateNotificationRule(_itemData);
-  //     }
-  //   } else if (communicationModal.type === 'marketing_campaign') {
-  //     if (communicationModal.mode === 'create') {
-  //       onSaveMarketingCampaign(_itemData);
-  //     } else {
-  //       onUpdateMarketingCampaign(_itemData);
-  //     }
-  //   }
-  //   setCommunicationModal({ isOpen: false, mode: 'create', type: 'email_template' });
-  // };
+  const handleSave = (itemData: any) => {
+    if (communicationModal.type === 'email_template') {
+      if (communicationModal.mode === 'create') {
+        onSaveEmailTemplate(itemData);
+      } else {
+        onUpdateEmailTemplate(itemData);
+      }
+    } else if (communicationModal.type === 'sms_message') {
+      onSendSMS(itemData);
+    } else if (communicationModal.type === 'notification_rule') {
+      if (communicationModal.mode === 'create') {
+        onSaveNotificationRule(itemData);
+      } else {
+        onUpdateNotificationRule(itemData);
+      }
+    } else if (communicationModal.type === 'marketing_campaign') {
+      if (communicationModal.mode === 'create') {
+        onSaveMarketingCampaign(itemData);
+      } else {
+        onUpdateMarketingCampaign(itemData);
+      }
+    }
+    setCommunicationModal({ isOpen: false, mode: 'create', type: 'email_template' });
+  };
 
   const totalEmails = communicationLogs.filter(log => log.type === 'email').length;
   const totalSMS = communicationLogs.filter(log => log.type === 'sms').length;

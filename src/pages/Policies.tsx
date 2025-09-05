@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useFeatureFlag } from '../config/features';
-// import { PolicyModal } from '../components/PolicyModal';
+import { PolicyModal } from '../components/PolicyModal';
 import type { RefundPolicy, DepositPolicy, PaymentTerms, RefundRequest } from '../types/policies';
 import { 
   Shield, 
@@ -42,25 +42,25 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
   depositPolicies,
   paymentTerms,
   refundRequests,
-  // onSaveRefundPolicy,
-  // onUpdateRefundPolicy,
-  // onDeleteRefundPolicy,
-  // onSaveDepositPolicy,
-  // onUpdateDepositPolicy,
-  // onDeleteDepositPolicy,
-  // onSavePaymentTerms,
-  // onUpdatePaymentTerms,
-  // onDeletePaymentTerms,
-  // onProcessRefundRequest
+  onSaveRefundPolicy,
+  onUpdateRefundPolicy,
+  onDeleteRefundPolicy,
+  onSaveDepositPolicy,
+  onUpdateDepositPolicy,
+  onDeleteDepositPolicy,
+  onSavePaymentTerms,
+  onUpdatePaymentTerms,
+  onDeletePaymentTerms,
+  onProcessRefundRequest
 }) => {
   const isPoliciesEnabled = useFeatureFlag('FEATURE_POLICIES_DEPOSITS');
   const [activeTab, setActiveTab] = useState<'refunds' | 'deposits' | 'payments' | 'requests'>('refunds');
-  // const [policyModal, setPolicyModal] = useState<{ 
-  //   isOpen: boolean; 
-  //   mode: 'create' | 'edit'; 
-  //   type: 'refund' | 'deposit' | 'payment';
-  //   policy?: RefundPolicy | DepositPolicy | PaymentTerms;
-  // }>({ isOpen: false, mode: 'create', type: 'refund' });
+  const [policyModal, setPolicyModal] = useState<{ 
+    isOpen: boolean; 
+    mode: 'create' | 'edit'; 
+    type: 'refund' | 'deposit' | 'payment';
+    policy?: RefundPolicy | DepositPolicy | PaymentTerms;
+  }>({ isOpen: false, mode: 'create', type: 'refund' });
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
 
@@ -93,28 +93,28 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
     }
   };
 
-  // const handleSave = (_policyData: any) => {
-  //   if (policyModal.type === 'refund') {
-  //     if (policyModal.mode === 'create') {
-  //       onSaveRefundPolicy(_policyData);
-  //     } else {
-  //       onUpdateRefundPolicy(_policyData);
-  //     }
-  //   } else if (policyModal.type === 'deposit') {
-  //     if (policyModal.mode === 'create') {
-  //       onSaveDepositPolicy(_policyData);
-  //     } else {
-  //       onUpdateDepositPolicy(_policyData);
-  //     }
-  //   } else if (policyModal.type === 'payment') {
-  //     if (policyModal.mode === 'create') {
-  //       onSavePaymentTerms(_policyData);
-  //     } else {
-  //       onUpdatePaymentTerms(_policyData);
-  //     }
-  //   }
-  //   setPolicyModal({ isOpen: false, mode: 'create', type: 'refund' });
-  // };
+  const handleSave = (policyData: any) => {
+    if (policyModal.type === 'refund') {
+      if (policyModal.mode === 'create') {
+        onSaveRefundPolicy(policyData);
+      } else {
+        onUpdateRefundPolicy(policyData);
+      }
+    } else if (policyModal.type === 'deposit') {
+      if (policyModal.mode === 'create') {
+        onSaveDepositPolicy(policyData);
+      } else {
+        onUpdateDepositPolicy(policyData);
+      }
+    } else if (policyModal.type === 'payment') {
+      if (policyModal.mode === 'create') {
+        onSavePaymentTerms(policyData);
+      } else {
+        onUpdatePaymentTerms(policyData);
+      }
+    }
+    setPolicyModal({ isOpen: false, mode: 'create', type: 'refund' });
+  };
 
   const pendingRequests = refundRequests.filter(req => req.status === 'pending');
   const totalRefundAmount = refundRequests

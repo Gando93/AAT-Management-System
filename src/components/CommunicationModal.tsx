@@ -20,7 +20,7 @@ export const CommunicationModal: React.FC<CommunicationModalProps> = ({
   mode,
   type
 }) => {
-  const [formData, setFormData] = useState<Partial<EmailTemplate | SMSMessage | NotificationRule | MarketingCampaign>>({});
+  const [formData, setFormData] = useState<any>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -134,7 +134,15 @@ export const CommunicationModal: React.FC<CommunicationModalProps> = ({
       return;
     }
 
-    onSave(formData);
+    // Create a properly typed object based on the type
+    const typedData = {
+      ...formData,
+      id: formData.id || `temp_${Date.now()}`,
+      createdAt: formData.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    } as EmailTemplate | SMSMessage | NotificationRule | MarketingCampaign;
+
+    onSave(typedData);
   };
 
   const handleInputChange = (field: string, value: string | number | boolean) => {

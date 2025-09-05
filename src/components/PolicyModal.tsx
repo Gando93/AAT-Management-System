@@ -20,7 +20,7 @@ export const PolicyModal: React.FC<PolicyModalProps> = ({
   mode,
   type
 }) => {
-  const [formData, setFormData] = useState<Partial<RefundPolicy | DepositPolicy | PaymentTerms>>({});
+  const [formData, setFormData] = useState<any>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -127,7 +127,15 @@ export const PolicyModal: React.FC<PolicyModalProps> = ({
       return;
     }
 
-    onSave(formData);
+    // Create a properly typed object based on the type
+    const typedData = {
+      ...formData,
+      id: formData.id || `temp_${Date.now()}`,
+      createdAt: formData.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    } as RefundPolicy | DepositPolicy | PaymentTerms;
+
+    onSave(typedData);
   };
 
   const handleInputChange = (field: string, value: string | number | boolean) => {
