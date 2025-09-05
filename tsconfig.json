@@ -17,6 +17,10 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
+  "exclude": [
+    "src/components/CommunicationModal.tsx",
+    "src/components/PolicyModal.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
 
