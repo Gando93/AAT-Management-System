@@ -103,23 +103,23 @@ export const CommunicationsPage: React.FC<CommunicationsPageProps> = ({
   const handleSave = (_itemData: any) => {
     if (communicationModal.type === 'email_template') {
       if (communicationModal.mode === 'create') {
-        onSaveEmailTemplate(itemData);
+        onSaveEmailTemplate(_itemData);
       } else {
-        onUpdateEmailTemplate(itemData);
+        onUpdateEmailTemplate(_itemData);
       }
     } else if (communicationModal.type === 'sms_message') {
-      onSendSMS(itemData);
+      onSendSMS(_itemData);
     } else if (communicationModal.type === 'notification_rule') {
       if (communicationModal.mode === 'create') {
-        onSaveNotificationRule(itemData);
+        onSaveNotificationRule(_itemData);
       } else {
-        onUpdateNotificationRule(itemData);
+        onUpdateNotificationRule(_itemData);
       }
     } else if (communicationModal.type === 'marketing_campaign') {
       if (communicationModal.mode === 'create') {
-        onSaveMarketingCampaign(itemData);
+        onSaveMarketingCampaign(_itemData);
       } else {
-        onUpdateMarketingCampaign(itemData);
+        onUpdateMarketingCampaign(_itemData);
       }
     }
     setCommunicationModal({ isOpen: false, mode: 'create', type: 'email_template' });

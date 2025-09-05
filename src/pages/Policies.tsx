@@ -96,21 +96,21 @@ export const PoliciesPage: React.FC<PoliciesPageProps> = ({
   const handleSave = (_policyData: any) => {
     if (policyModal.type === 'refund') {
       if (policyModal.mode === 'create') {
-        onSaveRefundPolicy(policyData);
+        onSaveRefundPolicy(_policyData);
       } else {
-        onUpdateRefundPolicy(policyData);
+        onUpdateRefundPolicy(_policyData);
       }
     } else if (policyModal.type === 'deposit') {
       if (policyModal.mode === 'create') {
-        onSaveDepositPolicy(policyData);
+        onSaveDepositPolicy(_policyData);
       } else {
-        onUpdateDepositPolicy(policyData);
+        onUpdateDepositPolicy(_policyData);
       }
     } else if (policyModal.type === 'payment') {
       if (policyModal.mode === 'create') {
-        onSavePaymentTerms(policyData);
+        onSavePaymentTerms(_policyData);
       } else {
-        onUpdatePaymentTerms(policyData);
+        onUpdatePaymentTerms(_policyData);
       }
     }
     setPolicyModal({ isOpen: false, mode: 'create', type: 'refund' });
