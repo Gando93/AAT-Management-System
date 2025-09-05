@@ -90,7 +90,7 @@ export const UserDropdown = ({
         <div className="relative">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 text-white hover:text-blue-100 hover:bg-white hover:bg-opacity-20 rounded-lg transition-colors"
+            className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
             title="Settings"
           >
             <Settings className="w-5 h-5" />

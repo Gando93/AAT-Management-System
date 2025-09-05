@@ -50,10 +50,30 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'Administrator' | 'Manager' | 'Agent' | 'Viewer';
+  password?: string; // Hashed password
+  role: 'Administrator' | 'Manager' | 'Agent' | 'Viewer' | 'Guide';
   status: 'active' | 'inactive';
   permissions: string[];
   lastLogin?: string;
+  createdAt: string;
+  needsPasswordSetup?: boolean;
+}
+
+export interface AuthState {
+  isAuthenticated: boolean;
+  currentUser: User | null;
+  token: string | null;
+}
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface PasswordSetup {
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export interface Vehicle {

@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Modal } from './Modal';
 import type { Booking, Customer, Tour } from '../types';
+import { useFeatureFlag } from '../config/features';
+import { computePrice } from '../lib/pricingEngine';
+import type { PricingConfig } from '../types/pricing';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -23,6 +27,8 @@ export const BookingModal = ({
   tours,
   onCreateCustomer 
 }: BookingModalProps) => {
+  const pricingEnabled = useFeatureFlag('FEATURE_PRICING_SEASONS');
+  const { formatAmount } = useCurrency();
   const [formData, setFormData] = useState({
     customerName: '',
     tourName: '',
@@ -45,6 +51,34 @@ export const BookingModal = ({
     phone: '',
   });
 
+  // Derived price preview (flagged)
+  const selectedTour: Tour | undefined = tours.find(t => t.name === formData.tourName);
+  const pricePreview = (() => {
+    if (!pricingEnabled || !selectedTour || !formData.tourDate) return null;
+    const cfg: PricingConfig = {
+      baseCurrency: 'EUR',
+      seasons: [
+        {
+          id: 'AUTO',
+          name: 'Default',
+          startDate: '2000-01-01',
+          endDate: '2100-12-31',
+          paxTierPrices: [
+            { category: 'adult', unitPrice: selectedTour.price || 0 },
+            { category: 'child', unitPrice: Math.max(0, (selectedTour.price || 0) * 0.6) },
+          ],
+          taxesPercent: 0,
+        },
+      ],
+      modifiers: [],
+    };
+    const breakdown = computePrice(cfg, {
+      tourDateISO: new Date(formData.tourDate + 'T10:00:00').toISOString(),
+      pax: { adult: formData.participants || 1 },
+    });
+    return breakdown;
+  })();
+
   useEffect(() => {
     if (mode === 'edit' && booking) {
       setFormData({
@@ -62,19 +96,21 @@ export const BookingModal = ({
         roomNumber: booking.roomNumber || '',
       });
     } else {
+      // If booking has a pre-filled tourDate (from calendar click), use it
+      const defaultTourDate = booking?.tourDate || '';
       setFormData({
-        customerName: '',
-        tourName: '',
+        customerName: booking?.customerName || '',
+        tourName: booking?.tourName || '',
         bookingDate: new Date().toISOString().split('T')[0],
-        tourDate: '',
-        totalAmount: 0,
-        status: 'pending',
-        guests: 1,
-        participants: 1,
-        notes: '',
-        paymentMethod: '',
-        paymentStatus: 'pending',
-        roomNumber: '',
+        tourDate: defaultTourDate,
+        totalAmount: booking?.totalAmount || 0,
+        status: booking?.status || 'pending',
+        guests: booking?.guests || 1,
+        participants: booking?.participants || 1,
+        notes: booking?.notes || '',
+        paymentMethod: booking?.paymentMethod || '',
+        paymentStatus: booking?.paymentStatus || 'pending',
+        roomNumber: booking?.roomNumber || '',
       });
     }
   }, [mode, booking, isOpen]);
@@ -225,6 +261,15 @@ export const BookingModal = ({
             ))}
           </select>
         </div>
+
+        {pricingEnabled && pricePreview && (
+          <div className="p-3 bg-blue-50 border border-blue-200 rounded-md">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-blue-800">Price Preview</span>
+              <span className="font-semibold text-blue-900">{formatAmount(pricePreview.total)}</span>
+            </div>
+          </div>
+        )}
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
